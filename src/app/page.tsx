@@ -49,8 +49,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-100">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-black-100">
+      <div className="bg-zinc-500 shadow-lg rounded-2xl p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Calculadora de Partidas Rankeadas
         </h1>
