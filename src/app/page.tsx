@@ -27,12 +27,12 @@ export default function CalculadoraRanked() {
     let i = 0;
     let nivel = "Ferro"; 
     while (i < niveis.length) {
-      const faixa = niveis[i];
-      if (vit >= faixa.min && vit <= faixa.max) {
-        nivel = faixa.nome;
-        break;
+     const faixa = niveis[i];
+      if (saldoVitorias >= faixa.min && saldoVitorias <= faixa.max) {
+      nivel = faixa.nome;
+      break;
       }
-      i++;
+     i++;
     }
 
     return { saldoVitorias, nivel };
