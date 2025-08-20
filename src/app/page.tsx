@@ -79,8 +79,4 @@ export default function CalculadoraRanked() {
   );
 }
 
-    </main>
-  );
-}
-
 
