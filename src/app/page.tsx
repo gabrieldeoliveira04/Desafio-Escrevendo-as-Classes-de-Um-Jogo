@@ -11,14 +11,14 @@ export default function Home() {
 
 
     const niveis = [
-      { limite: 10, nome: "Ferro" },
-      { limite: 20, nome: "Bronze" },
-      { limite: 50, nome: "Prata" },
-      { limite: 80, nome: "Ouro" },
-      { limite: 90, nome: "Diamante" },
-      { limite: 100, nome: "Lendário" },
-      { limite: Infinity, nome: "Imortal" }, 
-    ];
+    { min: 0,   max: 10,  nome: "Ferro" },
+    { min: 11,  max: 20,  nome: "Bronze" },
+    { min: 21,  max: 50,  nome: "Prata" },
+    { min: 51,  max: 80,  nome: "Ouro" },
+    { min: 81,  max: 90,  nome: "Diamante" },
+    { min: 91,  max: 100, nome: "Lendário" },
+    { min: 101, max: Infinity, nome: "Imortal" },
+  ];
 
     let i = 0;
     let nivel = "";
