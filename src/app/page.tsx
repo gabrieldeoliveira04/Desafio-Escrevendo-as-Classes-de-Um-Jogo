@@ -1,83 +1,119 @@
 "use client";
 import { useState } from "react";
 
-export default function CalculadoraRanked() {
-  const [vitorias, setVitorias] = useState<number | "">("");
-  const [derrotas, setDerrotas] = useState<number | "">("");
-  const [resultado, setResultado] = useState("");
+// ✅ Classe Herói
+class Heroi {
+  nome: string;
+  idade: number;
+  tipo: "guerreiro" | "mago" | "monge" | "ninja";
 
-
-  const niveis = [
-    { min: 0,   max: 10,  nome: "Ferro" },
-    { min: 11,  max: 20,  nome: "Bronze" },
-    { min: 21,  max: 50,  nome: "Prata" },
-    { min: 51,  max: 80,  nome: "Ouro" },
-    { min: 81,  max: 90,  nome: "Diamante" },
-    { min: 91,  max: 100, nome: "Lendário" },
-    { min: 101, max: Infinity, nome: "Imortal" },
-  ];
-
-  function calcularRank(v: number, d: number) {
-
-    const vit = Number.isFinite(v) && v >= 0 ? Math.floor(v) : 0;
-    const der = Number.isFinite(d) && d >= 0 ? Math.floor(d) : 0;
-
-    const saldoVitorias = vit - der;
-
-    let i = 0;
-    let nivel = "Ferro"; 
-    while (i < niveis.length) {
-     const faixa = niveis[i];
-      if (saldoVitorias >= faixa.min && saldoVitorias <= faixa.max) {
-      nivel = faixa.nome;
-      break;
-      }
-     i++;
-    }
-
-    return { saldoVitorias, nivel };
+  constructor(nome: string, idade: number, tipo: "guerreiro" | "mago" | "monge" | "ninja") {
+    this.nome = nome;
+    this.idade = idade;
+    this.tipo = tipo;
   }
 
-  const classificar = () => {
-    if (vitorias === "" || derrotas === "") return;
-    const { saldoVitorias, nivel } = calcularRank(Number(vitorias), Number(derrotas));
-    setResultado(`O Herói tem saldo de ${saldoVitorias} vitórias e está no nível de ${nivel}`);
+  // ✅ Método atacar
+  atacar() {
+    let ataque = "";
+
+    if (this.tipo === "mago") ataque = "magia";
+    else if (this.tipo === "guerreiro") ataque = "espada";
+    else if (this.tipo === "monge") ataque = "artes marciais";
+    else if (this.tipo === "ninja") ataque = "shuriken";
+    else ataque = "ataque desconhecido";
+
+    return `${this.tipo} atacou usando ${ataque}`;
+  }
+}
+
+export default function JogoHeroi() {
+  const [nome, setNome] = useState("");
+  const [idade, setIdade] = useState<number | "">("");
+  const [tipo, setTipo] = useState<"guerreiro" | "mago" | "monge" | "ninja" | "">("");
+  const [quantidadeAtaques, setQuantidadeAtaques] = useState<number | "">("");
+  const [resultado, setResultado] = useState<string[]>([]);
+
+  const handleAtacar = () => {
+    if (nome === "" || idade === "" || tipo === "" || quantidadeAtaques === "") return;
+
+    const heroi = new Heroi(nome, Number(idade), tipo);
+    const ataques: string[] = [];
+
+    // ✅ Laço de repetição para múltiplos ataques
+    let i = 0;
+    while (i < Number(quantidadeAtaques)) {
+      ataques.push(heroi.atacar());
+      i++;
+    }
+
+    setResultado(ataques);
   };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-100">
       <div className="bg-black shadow-lg rounded-2xl p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">Calculadora de Partidas Rankeadas</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Jogo de Heróis - Ataques Múltiplos</h1>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 bg-black">
+          <input
+            type="text"
+            placeholder="Nome do herói"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="border rounded-lg px-3 py-2"
+          />
+
           <input
             type="number"
-            placeholder="Vitórias"
-            value={vitorias}
-            onChange={(e) => setVitorias(e.target.value === "" ? "" : Number(e.target.value))}
+            placeholder="Idade do herói"
+            value={idade}
+            onChange={(e) => setIdade(e.target.value === "" ? "" : Number(e.target.value))}
             className="border rounded-lg px-3 py-2"
             min={0}
           />
+
+          <select
+            value={tipo}
+            onChange={(e) => setTipo(e.target.value as any)}
+            className="border rounded-lg px-3 py-2 bg-black"
+          >
+            <option value="">Selecione o tipo</option>
+            <option value="guerreiro">Guerreiro</option>
+            <option value="mago">Mago</option>
+            <option value="monge">Monge</option>
+            <option value="ninja">Ninja</option>
+          </select>
+
           <input
             type="number"
-            placeholder="Derrotas"
-            value={derrotas}
-            onChange={(e) => setDerrotas(e.target.value === "" ? "" : Number(e.target.value))}
+            placeholder="Quantidade de ataques"
+            value={quantidadeAtaques}
+            onChange={(e) => setQuantidadeAtaques(e.target.value === "" ? "" : Number(e.target.value))}
             className="border rounded-lg px-3 py-2"
-            min={0}
+            min={1}
           />
-          <button onClick={classificar} className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-            Classificar
+
+          <button
+            onClick={handleAtacar}
+            className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Atacar
           </button>
         </div>
 
-        {resultado && (
-          <p className="mt-4 text-lg font-medium text-center text-white">{resultado}</p>
+        {resultado.length > 0 && (
+          <div className="mt-4 text-lg font-medium text-center text-green-700">
+            {resultado.map((msg, index) => (
+              <p key={index}>{msg}</p>
+            ))}
+          </div>
         )}
       </div>
     </main>
   );
 }
+
 
 
 
