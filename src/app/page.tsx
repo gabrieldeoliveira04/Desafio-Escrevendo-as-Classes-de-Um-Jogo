@@ -25,7 +25,7 @@ export default function CalculadoraRanked() {
     const saldoVitorias = vit - der;
 
     let i = 0;
-    let nivel = "Ferro";
+    let nivel = "Ferro"; 
     while (i < niveis.length) {
       const faixa = niveis[i];
       if (vit >= faixa.min && vit <= faixa.max) {
@@ -45,8 +45,8 @@ export default function CalculadoraRanked() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-zinc-300">
-      <div className="bg-black shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-100">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Calculadora de Partidas Rankeadas</h1>
 
         <div className="flex flex-col gap-3">
@@ -72,11 +72,12 @@ export default function CalculadoraRanked() {
         </div>
 
         {resultado && (
-          <p className="mt-4 text-lg font-medium text-center text-white">{resultado}</p>
+          <p className="mt-4 text-lg font-medium text-center text-green-700">{resultado}</p>
         )}
       </div>
     </main>
   );
 }
+
 
 
