@@ -85,7 +85,7 @@ export default function Home() {
         </div>
 
         {resultado && (
-          <p className="mt-4 text-lg font-medium text-center text-green-700">
+          <p className="mt-4 text-lg font-medium text-center text-white">
             {resultado}
           </p>
         )}
