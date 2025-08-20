@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
 
-export default function Home() {
+export default function CalculadoraRanked() {
   const [vitorias, setVitorias] = useState<number | "">("");
   const [derrotas, setDerrotas] = useState<number | "">("");
   const [resultado, setResultado] = useState("");
 
-  function calcularRank(vitorias: number, derrotas: number) {
-    const saldoVitorias = vitorias - derrotas;
 
-
-    const niveis = [
+  const niveis = [
     { min: 0,   max: 10,  nome: "Ferro" },
     { min: 11,  max: 20,  nome: "Bronze" },
     { min: 21,  max: 50,  nome: "Prata" },
@@ -20,13 +17,19 @@ export default function Home() {
     { min: 101, max: Infinity, nome: "Imortal" },
   ];
 
+  function calcularRank(v: number, d: number) {
+
+    const vit = Number.isFinite(v) && v >= 0 ? Math.floor(v) : 0;
+    const der = Number.isFinite(d) && d >= 0 ? Math.floor(d) : 0;
+
+    const saldoVitorias = vit - der;
+
     let i = 0;
-    let nivel = "";
-
-
+    let nivel = "Ferro";
     while (i < niveis.length) {
-      if (vitorias <= niveis[i].limite) {
-        nivel = niveis[i].nome;
+      const faixa = niveis[i];
+      if (vit >= faixa.min && vit <= faixa.max) {
+        nivel = faixa.nome;
         break;
       }
       i++;
@@ -37,59 +40,45 @@ export default function Home() {
 
   const classificar = () => {
     if (vitorias === "" || derrotas === "") return;
-
-    const { saldoVitorias, nivel } = calcularRank(
-      Number(vitorias),
-      Number(derrotas)
-    );
-
-    setResultado(
-      `O Herói tem saldo de ${saldoVitorias} vitórias e está no nível de ${nivel}`
-    );
+    const { saldoVitorias, nivel } = calcularRank(Number(vitorias), Number(derrotas));
+    setResultado(`O Herói tem saldo de ${saldoVitorias} vitórias e está no nível de ${nivel}`);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-black-100">
-      <div className="bg-zinc-500 shadow-lg rounded-2xl p-6 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          Calculadora de Partidas Rankeadas
-        </h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-100">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-4 text-center">Calculadora de Partidas Rankeadas</h1>
 
         <div className="flex flex-col gap-3">
           <input
             type="number"
-            placeholder="Digite as vitórias"
+            placeholder="Vitórias"
             value={vitorias}
-            onChange={(e) =>
-              setVitorias(e.target.value === "" ? "" : Number(e.target.value))
-            }
+            onChange={(e) => setVitorias(e.target.value === "" ? "" : Number(e.target.value))}
             className="border rounded-lg px-3 py-2"
+            min={0}
           />
-
           <input
             type="number"
-            placeholder="Digite as derrotas"
+            placeholder="Derrotas"
             value={derrotas}
-            onChange={(e) =>
-              setDerrotas(e.target.value === "" ? "" : Number(e.target.value))
-            }
+            onChange={(e) => setDerrotas(e.target.value === "" ? "" : Number(e.target.value))}
             className="border rounded-lg px-3 py-2"
+            min={0}
           />
-
-          <button
-            onClick={classificar}
-            className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-          >
+          <button onClick={classificar} className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
             Classificar
           </button>
         </div>
 
         {resultado && (
-          <p className="mt-4 text-lg font-medium text-center text-white">
-            {resultado}
-          </p>
+          <p className="mt-4 text-lg font-medium text-center text-green-700">{resultado}</p>
         )}
       </div>
+    </main>
+  );
+}
+
     </main>
   );
 }
