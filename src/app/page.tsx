@@ -45,8 +45,8 @@ export default function CalculadoraRanked() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-black">
-      <div className="bg-zinc-300 shadow-lg rounded-2xl p-6 w-full max-w-md">
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-zinc-300">
+      <div className="bg-black shadow-lg rounded-2xl p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Calculadora de Partidas Rankeadas</h1>
 
         <div className="flex flex-col gap-3">
