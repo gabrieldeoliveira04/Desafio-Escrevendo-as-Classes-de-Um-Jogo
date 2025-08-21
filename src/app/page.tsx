@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-// ✅ Classe Herói
+
 class Heroi {
   nome: string;
   idade: number;
@@ -13,7 +13,6 @@ class Heroi {
     this.tipo = tipo;
   }
 
-  // ✅ Método atacar
   atacar() {
     let ataque = "";
 
@@ -40,7 +39,7 @@ export default function JogoHeroi() {
     const heroi = new Heroi(nome, Number(idade), tipo);
     const ataques: string[] = [];
 
-    // ✅ Laço de repetição para múltiplos ataques
+
     let i = 0;
     while (i < Number(quantidadeAtaques)) {
       ataques.push(heroi.atacar());
@@ -75,7 +74,9 @@ export default function JogoHeroi() {
 
           <select
             value={tipo}
-            onChange={(e) => setTipo(e.target.value as any)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setTipo(e.target.value as "guerreiro" | "mago" | "monge" | "ninja" | "")
+            }
             className="border rounded-lg px-3 py-2 bg-black"
           >
             <option value="">Selecione o tipo</option>
